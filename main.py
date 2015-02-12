@@ -1,13 +1,15 @@
-import urllib3
+import Quandl
+import matplotlib.pyplot as plt
+import matplotlib.pylab as pylab
 
-# step 1 - connect to the bls website
-http = urllib3.PoolManager()
-req = http.request('GET', 'http://download.bls.gov/pub/time.series/')
+# test 
+token = "H8VUjcUPEFHK_mFnjXp1"                      # Quandl token
 
-# step 2 - create a file
-f = open('test.txt', 'wb')
-f.write(req.data)
-f.close()
-req.release_conn()
+mydata = Quandl.get("FED/SVENY", authtoken=token)   # fed rates
 
-# test
+plt.plot(mydata['SVENY10'] - mydata['SVENY02'])
+plt.ylabel('2-10 year spread from the fed zero-coupon curve')
+plt.show()
+
+print("job done !")
+
