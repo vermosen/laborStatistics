@@ -5,11 +5,13 @@ from mysql.connector import errorcode
 try:
     
     config = {
+              
           'user': 'testUser',
           'password': 'test',
           'host': 'localhost',
           'database': 'macroeconomics_series',
           'raise_on_warnings': True,
+          
           }
   
     cnx = mysql.connector.Connect(**config)

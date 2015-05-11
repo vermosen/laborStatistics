@@ -7,7 +7,7 @@ from numpy import log
 token = "H8VUjcUPEFHK_mFnjXp1"                                          # my Quandl token
 
 # 1 - getting the interest rate data
-print('getting interest rate data from quandl...')                      # message
+print('getting interest rate data from Quandl...')                      # message
 
 rateData = Quandl.get("FED/SVENY", authtoken=token, returns="pandas")   # fed rates
 
@@ -17,7 +17,7 @@ print('computing 2-10 spread history from %s to %s' %
 print('done')
 
 # 2 - getting the GDP data
-print('getting GDP data from quandl...')                                # message
+print('getting GDP data from Quandl...')                                # message
 
 gdpData = Quandl.get("FRED/GDP", authtoken=token, returns="pandas")     # us GDP
 gpdDiff = log(gdpData / gdpData.shift(1))                              # q/q growth rate
@@ -51,5 +51,5 @@ tt.to_csv(filename, encoding='utf-8')
 
 
 # display the graphs
-#plt.show()
+plt.show()
 
