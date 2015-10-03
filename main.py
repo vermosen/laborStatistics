@@ -1,26 +1,27 @@
 import Quandl
 import matplotlib.pyplot as plt
-#import matplotlib.pylab as pylab
+import matplotlib.pylab as pylab
 import pandas as pd
-from numpy import log
+import numpy as np
+from datetime import datetime as t
+from getDataFromQuandl import getDataFromQuandl 
 
 token = "H8VUjcUPEFHK_mFnjXp1"                                          # my Quandl token
 
 # 1 - getting the interest rate data
-print('getting interest rate data from Quandl...')                      # message
+print('getting time series from Quandl...')                             # message
 
-rateData = Quandl.get("FED/SVENY", authtoken=token, returns="pandas")   # fed rates
+rate = getDataFromQuandl("FED/SVENY",type="pandas")                     # fed rates
+gdp  = getDataFromQuandl("FRED/GDP", type="pandas")                     # US GDP q/q
 
-print('computing 2-10 spread history from %s to %s' %                            
-     (rateData.first_valid_index(), rateData.last_valid_index()))       # message
+print('formatting data...')
+df = pd.concat([gdp.diff(1), rate], axis=1)                             # concatenate data
 
-print('done')
+print(df.tail(5))
 
-# 2 - getting the GDP data
-print('getting GDP data from Quandl...')                                # message
+print gdp[t(2015, 4, 1)]
 
-gdpData = Quandl.get("FRED/GDP", authtoken=token, returns="pandas")     # us GDP
-gpdDiff = log(gdpData / gdpData.shift(1))                              # q/q growth rate
+gpdDiff = np.log(gdpData / gdpData.shift(1))                            # q/q growth rate
 
 print('done')
 
